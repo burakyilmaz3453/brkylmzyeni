@@ -1,11 +1,11 @@
 :root {
-    --bg-dark: #000000;       /* Arka plan siyah */
-    --card-bg: #181a1e;       /* Kart rengi */
+    --bg-dark: #000000;       
+    --card-bg: #181a1e;       
     --text-white: #ffffff;
     --text-grey: #8b9bb4;
-    --accent-color: #0e8c6f;  /* Yeşil */
+    --accent-color: #0e8c6f;  
     --border-color: #2a2d35;
-    --site-width: 450px;      /* Site genişliği */
+    --site-width: 450px;      
 }
 
 * {
@@ -21,8 +21,7 @@ body {
     overflow-x: hidden; 
 }
 
-/* --- 1. KISIM: SABİT HEADER (BANNER + PROFİL) --- */
-/* Burası sabit kalacak, z-index ile en arkaya atıyoruz */
+/* --- HEADER --- */
 .fixed-header {
     position: fixed;
     top: 0;
@@ -31,7 +30,7 @@ body {
     width: 100%;
     max-width: var(--site-width);
     height: 100vh; 
-    z-index: -1;   /* İÇERİĞİN ARKASINDA KALACAK */
+    z-index: -1;   
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,7 +54,7 @@ body {
 .profile-container {
     width: 110px;
     height: 110px;
-    margin-top: -55px; /* Banner içine girme payı */
+    margin-top: -55px;
     border-radius: 50%;
     border: 4px solid var(--card-bg);
     overflow: hidden;
@@ -70,19 +69,16 @@ body {
     object-fit: cover;
 }
 
-/* --- 2. KISIM: KAYAN İÇERİK (KART) --- */
-/* Burası 1. kısmın üstüne çıkacak */
+/* --- CONTENT --- */
 .scroll-content {
-    /* KRİTİK AYAR: Kartı aşağı itiyoruz ki profil fotosu görünsün */
     margin-top: 240px; 
-    
     width: 100%;
     max-width: var(--site-width);
     margin-left: auto;
     margin-right: auto;
     min-height: 100vh;
     position: relative;
-    z-index: 10; /*Header'ın üstünde olması için*/
+    z-index: 10;
     padding-bottom: 40px;
 }
 
@@ -93,7 +89,7 @@ body {
     padding: 20px;
     min-height: 80vh;
     box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
-    padding-top: 20px; /* İsim ile kartın üstü arasındaki boşluk */
+    padding-top: 20px;
     border: 1px solid #222;
     border-bottom: none;
 }
@@ -180,32 +176,34 @@ body {
 
 .highlight-btn .icon { fill: #fff; }
 
-/* --- LİSTELER --- */
-.info-list {
+/* --- LİSTELER VE KUTULAR (GÜNCELLENDİ) --- */
+.info-list, .company-section {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.info-item {
+/* Hem Kişisel Hem Şirket Bilgisi Satırları */
+.info-item, .company-item {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Butonu sağa yaslar */
     background: #1e2125;
     padding: 12px 15px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
+    gap: 10px;
 }
 
 .list-icon {
     width: 20px;
     height: 20px;
     fill: var(--text-grey);
-    margin-right: 15px;
-    opacity: 0.8;
+    flex-shrink: 0; /* İkon küçülmesin */
 }
 
 .list-text {
-    flex: 1;
+    flex: 1; /* Boşluğu kaplasın */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -220,20 +218,28 @@ body {
 .value {
     font-size: 0.9rem;
     color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    word-wrap: break-word; /* Uzun adres alt satıra geçsin */
 }
 
-.copy-btn {
-    padding: 8px;
+/* Kopyalama Butonu (Sağdaki Kutu) */
+.copy-btn-box {
+    background: #2a2d35;
+    border: 1px solid #333;
     color: var(--text-grey);
-    background: transparent;
-    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+    flex-shrink: 0; /* Buton sıkışmasın */
+}
+
+.copy-btn-box:hover {
+    background: #444;
+    color: #fff;
 }
 
 .icon-sm { width: 16px; height: 16px; fill: currentColor; }
@@ -247,19 +253,12 @@ body {
     border: 1px solid var(--border-color);
 }
 
-.map-section h3 {
+.map-section h3, .social-section h3, .company-section h3 {
     font-size: 0.9rem;
     margin-bottom: 12px;
     color: #fff;
     border-bottom: 1px solid #333;
     padding-bottom: 8px;
-}
-
-.address-text {
-    margin: 12px 0;
-    font-size: 0.85rem;
-    color: var(--text-grey);
-    line-height: 1.4;
 }
 
 .directions-btn {
@@ -274,19 +273,13 @@ body {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.85rem;
+    width: 100%; /* Buton tam genişlik olsun */
 }
 
 /* --- SOSYAL MEDYA --- */
 .social-section {
     margin-top: 20px;
     padding: 0 5px;
-}
-
-.social-section h3 {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    color: #fff;
-    padding-left: 5px;
 }
 
 .social-btn {
@@ -311,50 +304,7 @@ body {
     fill: white;
 }
 
-/* --- ŞİRKET BİLGİLERİ (KUTULU) --- */
-.company-section {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.company-section h3 {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    color: #fff;
-    padding-left: 5px;
-}
-
-.company-item {
-    display: flex;
-    align-items: center;
-    background: #1e2125;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.company-item .list-text {
-    flex: 1;
-    padding-right: 10px;
-}
-
-/* Kopyalama Butonu (Kutu) */
-.copy-btn-box {
-    background: #2a2d35;
-    border: 1px solid #333;
-    color: var(--text-grey);
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.copy-btn-box:hover { background: #444; color: #fff; }
+.company-section { margin-top: 20px; }
 
 /* --- MODAL (QR) --- */
 .modal {
