@@ -1,22 +1,295 @@
-/* --- SOSYAL MEDYA BÖLÜMÜ --- */
+:root {
+    --bg-dark: #000000;       /* Sayfanın en arkası (Siyah) */
+    --card-bg: #181a1e;       /* Kart rengi */
+    --text-white: #ffffff;
+    --text-grey: #8b9bb4;
+    --accent-color: #0e8c6f;  /* Yeşil tonu */
+    --border-color: #2a2d35;
+    --site-width: 450px;      /* SİTE GENİŞLİĞİ */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    overflow-x: hidden; 
+}
+
+/* --- 1. KISIM: SABİT HEADER (BANNER + PROFİL) --- */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: var(--site-width);
+    height: 100vh; 
+    z-index: -1;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--bg-dark);
+}
+
+.banner-container {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 0 0 20px 20px;
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+}
+
+.profile-container {
+    width: 110px;
+    height: 110px;
+    margin-top: -55px;
+    border-radius: 50%;
+    border: 4px solid var(--card-bg);
+    overflow: hidden;
+    background: #000;
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- 2. KISIM: KAYAN İÇERİK (CARD) --- */
+.scroll-content {
+    margin-top: 125px; 
+    width: 100%;
+    max-width: var(--site-width);
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 40px;
+}
+
+.card-body {
+    background-color: var(--card-bg);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding: 20px;
+    min-height: 80vh;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+    padding-top: 70px;
+    border: 1px solid #222;
+    border-bottom: none;
+}
+
+.header-info {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.company {
+    color: var(--text-grey);
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 2px;
+    color: var(--accent-color);
+}
+
+/* --- BUTONLAR --- */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.action-btn {
+    background: #23262b;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px 2px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+    min-width: 0;
+}
+
+.action-btn:hover { background: #2c3036; }
+
+.action-btn span {
+    font-size: 0.65rem;
+    margin-top: 6px;
+    color: var(--text-grey);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.highlight-btn {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+.highlight-btn:hover { background: #0b7058; }
+.highlight-btn span { color: #fff; }
+
+.icon-box {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 100%;
+    height: 100%;
+    fill: var(--text-grey);
+}
+
+.highlight-btn .icon { fill: #fff; }
+
+/* --- LİSTELER --- */
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    background: #1e2125;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.list-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-grey);
+    margin-right: 15px;
+    opacity: 0.8;
+}
+
+.list-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.label {
+    font-size: 0.7rem;
+    color: var(--text-grey);
+    margin-bottom: 2px;
+}
+
+.value {
+    font-size: 0.9rem;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.copy-btn {
+    padding: 8px;
+    color: var(--text-grey);
+    background: transparent;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.icon-sm { width: 16px; height: 16px; fill: currentColor; }
+
+/* --- HARİTA --- */
+.map-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #1e2125;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.map-section h3 {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    color: #fff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+}
+
+.address-text {
+    margin: 12px 0;
+    font-size: 0.85rem;
+    color: var(--text-grey);
+    line-height: 1.4;
+}
+
+.directions-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent-color);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* --- SOSYAL MEDYA --- */
 .social-section {
     margin-top: 20px;
-    padding: 0 5px; /* Kenarlardan hizalama */
+    padding: 0 5px;
 }
 
 .social-section h3 {
     font-size: 0.9rem;
     margin-bottom: 10px;
     color: #fff;
-    padding-left: 10px; /* Başlık hizalaması */
+    padding-left: 5px;
 }
 
 .social-btn {
     display: flex;
     align-items: center;
-    justify-content: center; /* İkonu ortala */
-    gap: 10px;
-    width: 50px; /* Sadece ikon kadar kare buton */
+    justify-content: center;
+    width: 50px; 
     height: 50px;
     border-radius: 12px;
     text-decoration: none;
@@ -24,12 +297,8 @@
 }
 
 .social-btn.linkedin {
-    background-color: #0077b5; /* LinkedIn Mavisi */
+    background-color: #0077b5;
     color: white;
-}
-
-.social-btn span {
-    display: none; /* Yazıyı gizle sadece ikon kalsın, butonu büyütmek istersen bunu sil */
 }
 
 .icon-white {
@@ -38,11 +307,19 @@
     fill: white;
 }
 
-/* --- GELİŞMİŞ ŞİRKET BİLGİLERİ KUTULARI --- */
+/* --- ŞİRKET BİLGİLERİ (KUTULU) --- */
 .company-section {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.company-section h3 {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #fff;
+    padding-left: 5px;
 }
 
 .company-item {
@@ -59,6 +336,7 @@
     padding-right: 10px;
 }
 
+/* Kopyalama Butonu (Kutu) */
 .copy-btn-box {
     background: #2a2d35;
     border: 1px solid #333;
@@ -72,16 +350,56 @@
     cursor: pointer;
     transition: 0.2s;
 }
+.copy-btn-box:hover { background: #444; color: #fff; }
 
-.copy-btn-box:hover {
-    background: #444;
-    color: #fff;
+/* --- MODAL (QR) --- */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.9); 
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
 }
 
-.copy-btn-box .icon-sm {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
+.modal-content {
+    background-color: #1e2126;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 320px;
+    position: relative;
+    border: 1px solid var(--border-color);
 }
 
-/* --- test --- */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #888;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-qr {
+    width: 100%;
+    max-width: 220px;
+    margin: 20px 0;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 0 10px;
+    color: #444;
+    font-size: 11px;
+}
