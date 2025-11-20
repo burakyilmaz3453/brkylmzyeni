@@ -190,8 +190,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT -->
-    <script>
+  <script>
         // QR Kod
         function openQR() { document.getElementById("qrModal").style.display = "flex"; }
         function closeQR() { document.getElementById("qrModal").style.display = "none"; }
@@ -200,6 +199,8 @@
         // Kopyalama Fonksiyonu
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).textContent;
+            if (!text || text === "...") return; // Boşsa kopyalama
+            
             navigator.clipboard.writeText(text).then(function() {
                 alert("Kopyalandı: " + text);
             }, function(err) {
@@ -217,68 +218,127 @@
             .catch(error => console.error('Hata:', error));
 
         function parseVCF(data) {
+            // Yardımcı regex fonksiyonu
             const getTag = (regex) => {
                 const match = data.match(regex);
                 return match ? match[1].trim() : "";
             };
 
-            const fullName = getTag(/FN:(.*)/);
-            const org = getTag(/ORG:(.*)/);
-            const title = getTag(/TITLE:(.*)/);
+            // 1. İSİM VE ŞİRKET
+            // UTF-8 bozukluklarını önlemek için decode denemesi yapılabilir ama basit regex:
+            let fullName = getTag(/FN;?.*:(.*)/); 
+            if(!fullName) fullName = getTag(/FN:(.*)/);
+
+            let org = getTag(/ORG;?.*:(.*)/); // Noktalı virgül varsa temizle
+            org = org.split(';')[0]; // Bazen ORG:Şirket;Departman formatında gelir, sadece ilkini al.
             
-            const mobileMatch = data.match(/TEL;.*TYPE=.*CELL.*:(.*)/i);
-            const mobile = mobileMatch ? mobileMatch[1] : "";
+            const title = getTag(/TITLE;?.*:(.*)/);
+            
+            // 2. TELEFONLAR
+            const mobileMatch = data.match(/TEL;.*TYPE=.*CELL.*:(.*)/i) || data.match(/TEL;.*VOICE.*:(.*)/i);
+            let mobile = mobileMatch ? mobileMatch[1] : "";
 
             const workMatch = data.match(/TEL;.*TYPE=.*WORK.*:(.*)/i);
-            const workPhone = workMatch ? workMatch[1] : "";
+            let workPhone = workMatch ? workMatch[1] : "";
 
-            const email = getTag(/EMAIL.*:(.*)/);
-            const website = getTag(/URL:(.*)/);
+            // 3. E-POSTA VE WEB
+            const email = getTag(/EMAIL;?.*:(.*)/);
+            // Tüm URL'leri bulalım (Linkedin için lazım olacak)
+            const allUrls = [...data.matchAll(/URL;?.*:(.*)/gi)].map(m => m[1].trim());
+            let website = allUrls.length > 0 ? allUrls[0] : "";
+
+            // 4. ADRES (Kritik Düzeltme)
+            // Önce LABEL (Özel format) ara, bulamazsan ADR (Standart format) ara
+            let address = "";
+            const labelMatch = data.match(/LABEL(?:;[^:]*)*:(.*)/i);
             
-            // --- ADRES DÜZELTME KISMI ---
-            // Regex'i değiştirdik: LABEL'dan sonra ilk iki noktayı (:) bul, sonrasını al.
-            // Bu sayede adresin içindeki "No:" ibaresindeki iki noktadan etkilenmez.
-            const addressMatch = data.match(/LABEL(?:;[^:]*)*:(.*)/i);
-            let address = addressMatch ? addressMatch[1].trim() : "";
-            // Ters slash ve noktalı virgülleri temizle
-            address = address.replace(/\\n/g, " ").replace(/;/g, " ");
+            if (labelMatch) {
+                address = labelMatch[1].trim().replace(/\\n/g, " ");
+            } else {
+                // Standart ADR formatı: ADR:;;Sokak;Şehir;Eyalet;Posta;Ülke
+                const adrMatch = data.match(/ADR(?:;[^:]*)*:(.*)/i);
+                if (adrMatch) {
+                    // Noktalı virgülleri boşlukla değiştir ve temizle
+                    address = adrMatch[1].replace(/;/g, " ").replace(/\\n/g, " ").replace(/\s+/g, ' ').trim();
+                }
+            }
 
-            const linkedin = getTag(/X-SOCIALPROFILE.*linkedin:(.*)/i);
+            // 5. SOSYAL MEDYA (LinkedIn Düzeltmesi)
+            // Önce özel X-SOCIALPROFILE etiketine bak, yoksa URL'lerin içinde "linkedin" ara
+            let linkedin = getTag(/X-SOCIALPROFILE.*linkedin:(.*)/i) || getTag(/X-LINKEDIN:(.*)/i);
+            
+            if (!linkedin) {
+                const linkedinUrl = allUrls.find(url => url.toLowerCase().includes("linkedin.com"));
+                if (linkedinUrl) linkedin = linkedinUrl;
+            }
+
+            // 6. VERGİ BİLGİLERİ (Kritik)
+            // Standart VCF'lerde vergi no olmaz. Eğer dosya güncellendiyse bunlar silinmiştir.
+            // Eğer silindiyse HTML içinde varsayılan değer gösterilmemesi için kontrol koyuyoruz.
             const taxOffice = getTag(/X-TAX-OFFICE:(.*)/);
             const taxNo = getTag(/X-TAX-NUMBER:(.*)/);
 
-            // HTML'i Doldur
-            document.getElementById('vcf-name').textContent = fullName;
-            document.getElementById('footer-name').textContent = fullName;
-            document.getElementById('vcf-company').textContent = org;
-            document.getElementById('vcf-title').textContent = title;
+            // --- HTML DOLDURMA ---
+            
+            if(fullName) {
+                document.getElementById('vcf-name').textContent = fullName;
+                document.getElementById('footer-name').textContent = fullName;
+            }
+            if(org) {
+                document.getElementById('vcf-company').textContent = org;
+                document.getElementById('vcf-comp-name').textContent = org;
+            }
+            if(title) document.getElementById('vcf-title').textContent = title;
 
-            document.getElementById('btn-call').href = "tel:" + mobile;
-            document.getElementById('btn-email').href = "mailto:" + email;
-            const cleanMobile = mobile.replace(/[^0-9]/g, '');
-            document.getElementById('btn-whatsapp').href = "https://wa.me/" + cleanMobile;
-
-            document.getElementById('vcf-mobile').textContent = mobile;
-            document.getElementById('vcf-work').textContent = workPhone;
-            document.getElementById('vcf-email-text').textContent = email;
-            document.getElementById('vcf-web').textContent = website.replace('https://', '').replace('http://', '');
-            document.getElementById('link-web').href = website;
-
-            // Harita linki
-            document.getElementById('btn-direction').href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
-
-            if (linkedin) {
-                const liBtn = document.getElementById('btn-linkedin');
-                liBtn.style.display = "flex";
-                liBtn.href = linkedin;
+            // Telefonlar
+            if(mobile) {
+                document.getElementById('btn-call').href = "tel:" + mobile;
+                const cleanMobile = mobile.replace(/[^0-9]/g, '');
+                document.getElementById('btn-whatsapp').href = "https://wa.me/" + cleanMobile;
+                document.getElementById('vcf-mobile').textContent = mobile;
             }
 
-            // Şirket Bilgileri
-            document.getElementById('vcf-comp-name').textContent = org;
-            document.getElementById('vcf-comp-address').textContent = address;
-            document.getElementById('vcf-tax-office').textContent = taxOffice;
-            document.getElementById('vcf-tax-no').textContent = taxNo;
+            if(workPhone) {
+                document.getElementById('vcf-work').textContent = workPhone;
+            } else {
+                // Eğer iş telefonu yoksa o satırı gizleyebilirsin veya boş bırakırsın
+                document.getElementById('vcf-work').textContent = "-";
+            }
+            
+            // Email & Web
+            if(email) {
+                document.getElementById('btn-email').href = "mailto:" + email;
+                document.getElementById('vcf-email-text').textContent = email;
+            }
+            if(website) {
+                // Protokol temizliği
+                const cleanWeb = website.replace(/^https?:\/\//, '');
+                document.getElementById('vcf-web').textContent = cleanWeb;
+            }
+
+            // Adres ve Harita
+            if(address) {
+                document.getElementById('btn-direction').href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+                document.getElementById('vcf-comp-address').textContent = address;
+            } else {
+                document.getElementById('vcf-comp-address').textContent = "-";
+            }
+
+            // LinkedIn Göster/Gizle
+            const liBtn = document.getElementById('btn-linkedin');
+            if (linkedin) {
+                liBtn.style.display = "flex";
+                liBtn.href = linkedin.startsWith('http') ? linkedin : 'https://' + linkedin;
+            } else {
+                liBtn.style.display = "none";
+            }
+
+            // Vergi Bilgileri
+            // Eğer VCF'den gelmiyorsa "..." yerine "-" koyuyoruz ki boş olduğu belli olsun
+            document.getElementById('vcf-tax-office').textContent = taxOffice ? taxOffice : "—";
+            document.getElementById('vcf-tax-no').textContent = taxNo ? taxNo : "—";
         }
     </script>
 </body>
 </html>
+
