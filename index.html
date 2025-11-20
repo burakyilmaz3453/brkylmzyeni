@@ -224,17 +224,20 @@
                     </button>
                 </div>
 
-                <div class="info-item">
-                    <svg class="list-icon"><use href="icons.svg?v=1#web"></use></svg>
-                    <div class="list-text">
-                        <span class="label">Web Sitesi</span>
-                        <span class="value" id="vcf-web">...</span>
-                    </div>
-                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-web')">
-                        <svg class="icon-sm"><use href="icons.svg?v=1#copy"></use></svg>
-                    </button>
-                </div>
-            </div>
+                <div class="info-item">                    
+    <svg class="list-icon"><use href="icons.svg?v=2#web"></use></svg>    
+    <div class="list-text">
+        <span class="label">Web Sitesi</span>
+        <a href="https://www.osmanlimenkul.com.tr" target="_blank" class="value" id="vcf-web" style="text-decoration: none; color: inherit;">
+            www.osmanlimenkul.com.tr
+        </a>        
+    </div>
+
+    <!-- Kopyalama Butonu Kısmı -->
+    <button class="copy-btn-box" onclick="copyToClipboard('vcf-web')">
+        <svg class="icon-sm"><use href="icons.svg?v=2#copy"></use></svg>
+    </button>
+</div>
 
             <!-- Harita -->
             <div class="map-section">
@@ -462,3 +465,4 @@
     </script>
 </body>
 </html>
+
