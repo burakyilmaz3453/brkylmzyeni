@@ -6,13 +6,13 @@
     <title>Dijital Kartvizit</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- CSS DÜZELTMELERİ --- */
+        /* --- CSS DÜZELTMELERİ (SON HALİ) --- */
         
         body {
-            background-color: #000; /* Sayfa arka planı siyah olsun ki alttan sırıtmasın */
+            background-color: #000; 
         }
 
-        /* 1. KISIM: SABİT ALAN (Banner + Profil + İsim + Butonlar) */
+        /* 1. KISIM: SABİT ALAN */
         .fixed-header {
             position: fixed;
             top: 0;
@@ -20,8 +20,9 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 450px;
-            height: 460px; /* YÜKSEKLİK ARTTI: Yazıların sığması için */
-            z-index: 1;    /* Z-INDEX DÜŞÜRÜLDÜ: Arkada kalması için */
+            /* YÜKSEKLİK ARTTIRILDI: 480px yapıldı (yazılar aşağı indiği için) */
+            height: 480px; 
+            z-index: 1;    
             background-color: #000;
             display: flex;
             flex-direction: column;
@@ -50,8 +51,8 @@
             width: 100%;
             background-color: #181a1e;
             margin-top: -40px; 
-            /* PADDING ARTTIRILDI: Profil fotosu yazının üstüne binmesin diye 85px yapıldı */
-            padding-top: 85px; 
+            /* PADDING GÜNCELLENDİ: 105px yapıldı. Yazılar profil fotosundan iyice uzaklaştı. */
+            padding-top: 105px; 
             padding-bottom: 15px;
             border-radius: 25px 25px 0 0;
             border: 1px solid #2a2d35;
@@ -75,44 +76,43 @@
             z-index: 2;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             position: absolute;
-            top: 160px; /* Konum sabitlendi */
+            top: 160px; 
         }
 
-        /* 2. KISIM: KAYAR ALAN (Listeler, Harita vb.) */
+        /* 2. KISIM: KAYAR ALAN */
         .scroll-content {
-            /* MARGIN SABİT KISIM KADAR OLMALI: 460px */
-            margin-top: 460px; 
+            /* MARGIN GÜNCELLENDİ: Sabit kısım 480px olduğu için burası da 480px oldu */
+            margin-top: 480px; 
             width: 100%;
             max-width: 450px;
             margin-left: auto;
             margin-right: auto;
             position: relative;
-            /* Z-INDEX YÜKSELTİLDİ: 100 yapıldı ki üst kısma binerek kayabilsin */
             z-index: 100; 
             padding-bottom: 40px;
         }
 
         .card-body {
             background-color: #181a1e;
-            /* Üstü düz görünsün istenirse radius kaldırılabilir ama böyle estetik durur */
             border-radius: 0 0 25px 25px; 
             padding: 10px 20px 20px 20px;
-            min-height: 60vh; /* Sayfa boşken bile aşağısı dolu görünsün */
+            min-height: 60vh; 
             border: 1px solid #2a2d35;
             border-top: none;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5); /* Ayrımı belli etmek için gölge */
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5); 
         }
 
         /* Butonların sığması için ayar */
         .action-buttons {
             width: 90%;
-            margin-top: 15px;
+            /* MARGIN ARTTIRILDI: Butonlar bir tık daha aşağı kaydı (25px) */
+            margin-top: 25px;
         }
         
         .header-info {
             margin-bottom: 5px;
             text-align: center;
-            z-index: 5; /* Yazıların önde olduğundan emin olalım */
+            z-index: 5;
             position: relative;
         }
     </style>
