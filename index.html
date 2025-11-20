@@ -5,13 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dijital Kartvizit</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Acil CSS Yaması: Banner'ın kaybolmaması için z-index ayarı */
+        .fixed-header {
+            z-index: 0 !important; /* -1 yerine 0 yapıldı ki arka planda kalmasın */
+        }
+        .scroll-content {
+            z-index: 10;
+            position: relative;
+        }
+        /* Banner resmi yüklenemezse en azından gri bir alan görünsün, yok olmasın */
+        .banner-img {
+            background-color: #333; 
+            min-height: 160px;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Header -->
     <div class="fixed-header">
         <div class="banner-container">
-            <img src="banner.jpg" alt="Banner" class="banner-img" onerror="this.style.display='none'">
+            <!-- onerror kısmı silindi, yerine placeholder eklendi -->
+            <img src="banner.jpg" alt="Banner" class="banner-img" onerror="this.src='https://via.placeholder.com/600x200?text=Banner+Yuklenemedi'">
         </div>
         <div class="profile-container">
             <img src="profil.jpg" alt="Profil" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
@@ -32,7 +48,6 @@
             <!-- 5'li Butonlar -->
             <div class="action-buttons">
                 <a href="#" id="btn-call" class="action-btn">
-                    <!-- İkonlar tekrar harici dosyaya bağlandı -->
                     <div class="icon-box"><svg class="icon"><use href="icons.svg#phone"></use></svg></div>
                     <span>Ara</span>
                 </a>
@@ -178,7 +193,7 @@
                 </div>
             </div>
             
-            <footer>&copy; 2025 <span id="footer-name"></span></footer>
+            <footer>&copy; 2024 <span id="footer-name"></span></footer>
         </div>
     </div>
 
@@ -289,9 +304,7 @@
                 document.getElementById('vcf-email-text').textContent = email;
             }
             
-            // --- WEB SİTESİ DÜZELTME (Regex Eklendi) ---
             if(website) {
-                // http://, https:// veya // ile başlayan kısımları temizler
                 let cleanWeb = website.replace(/^https?:\/\//, '').replace(/^\/\//, '');
                 document.getElementById('vcf-web').textContent = cleanWeb;
             }
