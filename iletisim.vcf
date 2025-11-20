@@ -3,7 +3,7 @@ VERSION:3.0
 N:Yılmaz;Burak;;;
 FN:Burak Yılmaz
 ORG:Osmanlı Menkul Değerler A.Ş.
-TITLE:BT System Yöneticisi
+TITLE:Sistem Yöneticisi
 TEL;TYPE=CELL,VOICE,PREF:+90 552 491 5334
 TEL;TYPE=WORK,VOICE:+90 212 366 8823
 EMAIL;TYPE=INTERNET,WORK,PREF:buraky@osmanlimenkul.com.tr
@@ -13,3 +13,4 @@ X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/burakyilmaz
 X-TAX-OFFICE:Boğaziçi Kurumlar
 X-TAX-NUMBER:47000087388
 END:VCARD
+
