@@ -6,8 +6,12 @@
     <title>Dijital Kartvizit</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- YENİ DÜZEN AYARLARI (CSS YAMASI) --- */
+        /* --- CSS DÜZELTMELERİ --- */
         
+        body {
+            background-color: #000; /* Sayfa arka planı siyah olsun ki alttan sırıtmasın */
+        }
+
         /* 1. KISIM: SABİT ALAN (Banner + Profil + İsim + Butonlar) */
         .fixed-header {
             position: fixed;
@@ -15,16 +19,16 @@
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-            max-width: 450px; /* CSS dosyasındaki site-width ile aynı */
-            height: 400px; /* Yüksekliği artırdık çünkü butonlar buraya geldi */
-            z-index: 100;
-            background-color: #000; /* Arka plan siyah */
+            max-width: 450px;
+            height: 460px; /* YÜKSEKLİK ARTTI: Yazıların sığması için */
+            z-index: 1;    /* Z-INDEX DÜŞÜRÜLDÜ: Arkada kalması için */
+            background-color: #000;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* Banner Ayarı */
+        /* Banner */
         .banner-container {
             width: 100%;
             height: 160px;
@@ -38,19 +42,20 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            background-color: #333; /* Resim yüklenemezse gri fon */
+            background-color: #333;
         }
 
-        /* Kartın Üst Kısmı (İsim ve Butonların olduğu gri alan) */
+        /* Kartın Üst Kısmı (Gri Alan) */
         .fixed-card-part {
             width: 100%;
-            background-color: #181a1e; /* Kart rengi */
-            margin-top: -40px; /* Banner'ın altına girmesi için */
-            padding-top: 50px; /* Profil fotosu payı */
+            background-color: #181a1e;
+            margin-top: -40px; 
+            /* PADDING ARTTIRILDI: Profil fotosu yazının üstüne binmesin diye 85px yapıldı */
+            padding-top: 85px; 
             padding-bottom: 15px;
-            border-radius: 25px 25px 0 0; /* Sadece üst köşeler yuvarlak */
+            border-radius: 25px 25px 0 0;
             border: 1px solid #2a2d35;
-            border-bottom: none; /* Alt çizgi yok, aşağıyla birleşecek */
+            border-bottom: none;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -62,52 +67,59 @@
         .profile-container {
             width: 110px;
             height: 110px;
-            margin-top: -55px; /* Banner üzerine çıkma payı */
+            margin-top: -55px; 
             border-radius: 50%;
-            border: 4px solid #181a1e; /* Kart rengiyle aynı çerçeve */
+            border: 4px solid #181a1e;
             overflow: hidden;
             background: #000;
-            z-index: 2; /* En üstte */
+            z-index: 2;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             position: absolute;
-            top: 160px; /* Banner boyu kadar aşağıda */
+            top: 160px; /* Konum sabitlendi */
         }
 
         /* 2. KISIM: KAYAR ALAN (Listeler, Harita vb.) */
         .scroll-content {
-            margin-top: 390px; /* Sabit kısmın yüksekliği kadar boşluk */
+            /* MARGIN SABİT KISIM KADAR OLMALI: 460px */
+            margin-top: 460px; 
             width: 100%;
             max-width: 450px;
             margin-left: auto;
             margin-right: auto;
             position: relative;
-            z-index: 10;
+            /* Z-INDEX YÜKSELTİLDİ: 100 yapıldı ki üst kısma binerek kayabilsin */
+            z-index: 100; 
             padding-bottom: 40px;
         }
 
         .card-body {
             background-color: #181a1e;
-            border-radius: 0 0 25px 25px; /* Sadece alt köşeler yuvarlak */
-            padding: 0 20px 20px 20px; /* Üst paddingi sıfırladık */
-            min-height: 50vh;
+            /* Üstü düz görünsün istenirse radius kaldırılabilir ama böyle estetik durur */
+            border-radius: 0 0 25px 25px; 
+            padding: 10px 20px 20px 20px;
+            min-height: 60vh; /* Sayfa boşken bile aşağısı dolu görünsün */
             border: 1px solid #2a2d35;
-            border-top: none; /* Üst çizgi yok, yukarıyla birleşecek */
+            border-top: none;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5); /* Ayrımı belli etmek için gölge */
         }
 
         /* Butonların sığması için ayar */
         .action-buttons {
             width: 90%;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         
         .header-info {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            text-align: center;
+            z-index: 5; /* Yazıların önde olduğundan emin olalım */
+            position: relative;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. KISIM: SABİT HEADER (Banner, Profil, İsim, Butonlar) -->
+    <!-- 1. KISIM: SABİT HEADER (Arkada Kalacak) -->
     <div class="fixed-header">
         
         <!-- Banner -->
@@ -120,7 +132,7 @@
             <img src="profil.jpg" alt="Profil" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
         </div>
 
-        <!-- Sabit Kart Alanı (İsim ve Butonlar buraya taşındı) -->
+        <!-- Sabit Kart Alanı -->
         <div class="fixed-card-part">
             <!-- Başlık -->
             <div class="header-info">
@@ -155,12 +167,12 @@
         </div>
     </div>
 
-    <!-- 2. KISIM: KAYAR İÇERİK (Geriye kalan her şey) -->
+    <!-- 2. KISIM: KAYAR İÇERİK (Önden Gidecek) -->
     <div class="scroll-content">
         <div class="card-body">
             
             <!-- İletişim Listesi -->
-            <div class="info-list" style="margin-top: 10px;">
+            <div class="info-list">
                 <!-- Cep Tel -->
                 <div class="info-item">
                     <svg class="list-icon"><use href="icons.svg#mobile"></use></svg>
