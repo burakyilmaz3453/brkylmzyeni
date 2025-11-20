@@ -11,8 +11,7 @@
     <!-- Header -->
     <div class="fixed-header">
         <div class="banner-container">
-            <!-- Resimler yüklenemezse alt yazı görünsün -->
-            <img src="banner.jpg" alt="Banner Yüklenemedi" class="banner-img" onerror="this.style.display='none'">
+            <img src="banner.jpg" alt="Banner" class="banner-img" onerror="this.style.display='none'">
         </div>
         <div class="profile-container">
             <img src="profil.jpg" alt="Profil" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
@@ -54,7 +53,7 @@
                 </a>
             </div>
 
-            <!-- İletişim Listesi (VCF'den Doldurulacak) -->
+            <!-- İletişim Listesi -->
             <div class="info-list">
                 <!-- Cep Tel -->
                 <div class="info-item">
@@ -97,10 +96,9 @@
                 </div>
             </div>
 
-            <!-- Harita (Adres VCF'den gelecek) -->
+            <!-- Harita -->
             <div class="map-section">
                 <h3>Adres Bilgileri</h3>
-                <!-- Harita iframe sabit kalabilir veya JS ile güncellenebilir, şimdilik sabit -->
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3006.837687749637!2d29.0208!3d41.1014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5d4f628693f%3A0x2e60663769484337!2sOsmanl%C4%B1%20Yat%C4%B1r%C4%B1m%20Menkul%20De%C4%9Ferler%20A.%C5%9E.!5e0!3m2!1str!2str" 
                 width="100%" height="200" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
                 
@@ -112,7 +110,7 @@
                 </a>
             </div>
 
-            <!-- SOSYAL MEDYA (VCF'den Gelecek) -->
+            <!-- SOSYAL MEDYA -->
             <div class="social-section">
                 <h3>Sosyal Medya</h3>
                 <a href="#" id="btn-linkedin" target="_blank" class="social-btn linkedin" style="display:none;">
@@ -120,10 +118,11 @@
                 </a>
             </div>
 
-            <!-- ŞİRKET BİLGİLERİ (VCF'deki Özel Alanlardan Gelecek) -->
+            <!-- ŞİRKET BİLGİLERİ (DÜZELTİLDİ) -->
             <div class="company-section">
                 <h3>Şirket Bilgileri</h3>
                 
+                <!-- Şirket Adı -->
                 <div class="company-item">
                     <svg class="list-icon"><use href="icons.svg#building"></use></svg>
                     <div class="list-text">
@@ -132,6 +131,16 @@
                     </div>
                 </div>
 
+                <!-- EKLENEN KISIM: Şirket Adresi -->
+                <div class="company-item">
+                    <svg class="list-icon"><use href="icons.svg#location"></use></svg>
+                    <div class="list-text">
+                        <span class="label">Şirket Adresi</span>
+                        <span class="value" id="vcf-comp-address">...</span>
+                    </div>
+                </div>
+
+                <!-- Vergi Dairesi -->
                 <div class="company-item">
                     <svg class="list-icon"><use href="icons.svg#tax-office"></use></svg>
                     <div class="list-text">
@@ -140,6 +149,7 @@
                     </div>
                 </div>
 
+                <!-- Vergi No -->
                 <div class="company-item">
                     <svg class="list-icon"><use href="icons.svg#card"></use></svg>
                     <div class="list-text">
@@ -162,36 +172,30 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: VCF OKUYUCU -->
+    <!-- JAVASCRIPT -->
     <script>
-        // 1. QR Kod İşlemleri
         function openQR() { document.getElementById("qrModal").style.display = "flex"; }
         function closeQR() { document.getElementById("qrModal").style.display = "none"; }
         window.onclick = function(e) { if(e.target == document.getElementById("qrModal")) closeQR(); }
 
-        // 2. VCF Verisini Çekme ve Ayrıştırma
         fetch('iletisim.vcf')
             .then(response => response.text())
             .then(vcfText => {
-                console.log("VCF Dosyası Okundu");
+                console.log("VCF Okundu");
                 parseVCF(vcfText);
             })
-            .catch(error => console.error('VCF okuma hatası:', error));
+            .catch(error => console.error('Hata:', error));
 
         function parseVCF(data) {
-            // Helper: Belirli bir etiketi bulma (Regex)
             const getTag = (regex) => {
                 const match = data.match(regex);
                 return match ? match[1].trim() : "";
             };
 
-            // --- VERİLERİ AYIKLA ---
             const fullName = getTag(/FN:(.*)/);
             const org = getTag(/ORG:(.*)/);
             const title = getTag(/TITLE:(.*)/);
             
-            // Telefonlar: Farklı tipleri ayırt et
-            // TEL;TYPE=CELL...:+90... şeklindeki veriyi alır
             const mobileMatch = data.match(/TEL;.*TYPE=.*CELL.*:(.*)/i);
             const mobile = mobileMatch ? mobileMatch[1] : "";
 
@@ -201,32 +205,24 @@
             const email = getTag(/EMAIL.*:(.*)/);
             const website = getTag(/URL:(.*)/);
             
-            // Adresi düzelt (noktalı virgülleri ve ters slaşları temizle)
             let address = getTag(/LABEL.*:(.*)/) || getTag(/ADR.*:;;(.*)/);
             address = address.replace(/\\n/g, " ").replace(/;/g, " ");
 
-            // Özel Alanlar (X-...)
             const linkedin = getTag(/X-SOCIALPROFILE.*linkedin:(.*)/i);
             const taxOffice = getTag(/X-TAX-OFFICE:(.*)/);
             const taxNo = getTag(/X-TAX-NUMBER:(.*)/);
 
-            // --- HTML'E YERLEŞTİR ---
-            
-            // Header Bilgileri
+            // HTML Doldurma
             document.getElementById('vcf-name').textContent = fullName;
             document.getElementById('footer-name').textContent = fullName;
             document.getElementById('vcf-company').textContent = org;
             document.getElementById('vcf-title').textContent = title;
 
-            // Buton Linkleri
             document.getElementById('btn-call').href = "tel:" + mobile;
             document.getElementById('btn-email').href = "mailto:" + email;
-            
-            // WhatsApp (Numaradan boşlukları temizle)
             const cleanMobile = mobile.replace(/[^0-9]/g, '');
             document.getElementById('btn-whatsapp').href = "https://wa.me/" + cleanMobile;
 
-            // Liste Bilgileri
             document.getElementById('vcf-mobile').textContent = mobile;
             document.getElementById('copy-mobile').href = "tel:" + mobile;
             
@@ -239,11 +235,10 @@
             document.getElementById('vcf-web').textContent = website.replace('https://', '').replace('http://', '');
             document.getElementById('link-web').href = website;
 
-            // Adres ve Harita Butonu
+            // Harita ve Adres
             document.getElementById('vcf-address').textContent = address;
             document.getElementById('btn-direction').href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
 
-            // LinkedIn (Varsa Göster)
             if (linkedin) {
                 const liBtn = document.getElementById('btn-linkedin');
                 liBtn.style.display = "flex";
@@ -252,6 +247,8 @@
 
             // Şirket Bilgileri
             document.getElementById('vcf-comp-name').textContent = org;
+            // Şirket Adresi VCF'den gelen adresi kullanıyor
+            document.getElementById('vcf-comp-address').textContent = address;
             document.getElementById('vcf-tax-office').textContent = taxOffice;
             document.getElementById('vcf-tax-no').textContent = taxNo;
         }
