@@ -1,179 +1,301 @@
-/* Genel Ayarlar */
 :root {
-    --bg-color: #f0f2f5;
-    --card-bg: #ffffff;
-    --text-color: #333;
-    --sub-text: #666;
-    --primary-color: #007bff;
-    --primary-hover: #0056b3;
+    --bg-dark: #0f1115;       /* En arka plan rengi */
+    --card-bg: #181a1e;       /* Kart rengi */
+    --text-white: #ffffff;
+    --text-grey: #8b9bb4;
+    --accent-color: #0e8c6f;  /* Osmanlı Yatırım Yeşili / Buton rengi */
+    --border-color: #2a2d35;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+}
+
+/* --- 1. KISIM: SABİT HEADER --- */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Ekranı kaplar ama z-index ile arkada kalır */
+    z-index: -1;   /* İçeriğin arkasında kalmasını sağlar */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    padding: 20px;
 }
 
-/* Kart Yapısı */
-.container {
-    background: var(--card-bg);
+.banner-container {
     width: 100%;
-    max-width: 400px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    height: 180px;
     overflow: hidden;
-    text-align: center;
-    position: relative;
 }
 
-/* Banner */
-.banner img {
+.banner-img {
     width: 100%;
-    height: 150px;
+    height: 100%;
     object-fit: cover;
-    display: block;
+    opacity: 0.8;
 }
 
-/* Profil Fotoğrafı */
-.profile-section {
-    position: relative;
-    padding: 0 20px;
-}
-
-.profile-pic {
-    width: 110px;
-    height: 110px;
-    margin: -55px auto 15px; /* Banner'ın üstüne binmesi için */
+.profile-container {
+    width: 120px;
+    height: 120px;
+    margin-top: -60px; /* Banner içine girsin */
     border-radius: 50%;
     border: 4px solid var(--card-bg);
     overflow: hidden;
-    background: #fff;
+    background: #000;
+    z-index: 2;
 }
 
-.profile-pic img {
+.profile-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+/* --- 2. KISIM: KAYAN İÇERİK (SHEET) --- */
+.scroll-content {
+    margin-top: 140px; /* Profil fotosunun bittiği yerin hemen altı */
+    width: 100%;
+    min-height: 100vh;
+    background: transparent; /* Arka planı şeffaf yapıyoruz ki alttaki div görünsün */
+    padding-bottom: 40px;
+    z-index: 10;
+    position: relative;
+}
+
+.card-body {
+    background-color: var(--bg-dark);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 20px;
+    min-height: 80vh;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+    /* İsim kısmının profil fotosu ile çakışmaması için biraz boşluk */
+    padding-top: 80px; 
+}
+
+.header-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 .name {
-    font-size: 1.5rem;
-    color: var(--text-color);
+    font-size: 1.8rem;
+    font-weight: 700;
     margin-bottom: 5px;
 }
 
+.company {
+    color: var(--text-grey);
+    font-size: 0.9rem;
+}
+
 .title {
-    color: var(--primary-color);
-    font-weight: 600;
+    color: var(--text-grey);
     font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 2px;
 }
 
-.bio {
-    color: var(--sub-text);
+/* --- 5'Lİ BUTON GRUBU --- */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.action-btn {
+    background: #1e2126;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 5px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.action-btn span {
+    font-size: 0.7rem;
+    margin-top: 8px;
+    color: var(--text-grey);
+}
+
+.highlight-btn {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.highlight-btn span {
+    color: #fff;
+}
+
+.icon-box {
+    width: 24px;
+    height: 24px;
+}
+
+.icon {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/* --- BİLGİ LİSTESİ --- */
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    background: #15171b;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.list-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-grey);
+    margin-right: 15px;
+}
+
+.list-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 0.75rem;
+    color: var(--text-grey);
+    margin-bottom: 2px;
+}
+
+.value {
+    font-size: 0.95rem;
+    color: #fff;
+    word-break: break-all;
+}
+
+.copy-btn {
+    padding: 8px;
+    color: var(--text-grey);
+    background: #1f2228;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.icon-sm {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* --- HARİTA --- */
+.map-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #15171b;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.map-section h3, .company-section h3 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: var(--text-white);
+}
+
+.address-text {
+    margin: 15px 0;
     font-size: 0.9rem;
-    margin: 10px 0 20px;
-    line-height: 1.4;
+    color: var(--text-grey);
+    line-height: 1.5;
 }
 
-/* Butonlar */
-.actions {
-    margin-bottom: 20px;
-    padding: 0 20px;
-}
-
-.btn {
+.directions-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 12px 20px;
-    border-radius: 50px;
+    background: var(--accent-color);
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
-    transition: 0.3s;
-}
-
-.primary-btn {
-    background-color: var(--text-color);
-    color: #fff;
-}
-
-.primary-btn:hover {
-    background-color: #000;
-    transform: translateY(-2px);
-}
-
-/* Link Listesi */
-.links {
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.link-item {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: 0.2s;
-    border: 1px solid #eee;
-}
-
-.link-item:hover {
-    background: #e9ecef;
-    border-color: #ddd;
-}
-
-/* İkonlar (SVG) */
-.icon {
-    width: 24px;
-    height: 24px;
-    fill: currentColor; /* Yazı rengiyle aynı olur */
-}
-
-/* QR Bölümü */
-.qr-section {
-    margin: 30px 0 20px;
-    padding: 20px;
-    border-top: 1px solid #eee;
-}
-
-.qr-section h3 {
     font-size: 0.9rem;
-    color: var(--sub-text);
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
-.qr-section img {
-    width: 120px;
-    height: 120px;
-    padding: 10px;
+/* --- ŞİRKET BİLGİLERİ --- */
+.company-section {
+    margin-top: 20px;
+}
+
+/* --- MODAL (QR POPUP) --- */
+.modal {
+    display: none; /* Varsayılan olarak gizli */
+    position: fixed; 
+    z-index: 100; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.8); 
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #1e2126;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    max-width: 300px;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-qr {
+    width: 100%;
+    max-width: 200px;
+    margin: 20px 0;
     background: #fff;
-    border: 1px solid #eee;
+    padding: 10px;
     border-radius: 10px;
-}
-
-footer {
-    padding: 15px;
-    background: #fafafa;
-    font-size: 0.8rem;
-    color: #999;
 }
