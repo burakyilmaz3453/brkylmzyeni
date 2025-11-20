@@ -6,38 +6,122 @@
     <title>Dijital Kartvizit</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Acil CSS Yaması: Banner'ın kaybolmaması için z-index ayarı */
+        /* --- YENİ DÜZEN AYARLARI (CSS YAMASI) --- */
+        
+        /* 1. KISIM: SABİT ALAN (Banner + Profil + İsim + Butonlar) */
         .fixed-header {
-            z-index: 0 !important; /* -1 yerine 0 yapıldı ki arka planda kalmasın */
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 450px; /* CSS dosyasındaki site-width ile aynı */
+            height: 400px; /* Yüksekliği artırdık çünkü butonlar buraya geldi */
+            z-index: 100;
+            background-color: #000; /* Arka plan siyah */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .scroll-content {
-            z-index: 10;
-            position: relative;
+
+        /* Banner Ayarı */
+        .banner-container {
+            width: 100%;
+            height: 160px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 0 0 20px 20px;
+            z-index: 1;
         }
-        /* Banner resmi yüklenemezse en azından gri bir alan görünsün, yok olmasın */
+        
         .banner-img {
-            background-color: #333; 
-            min-height: 160px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #333; /* Resim yüklenemezse gri fon */
+        }
+
+        /* Kartın Üst Kısmı (İsim ve Butonların olduğu gri alan) */
+        .fixed-card-part {
+            width: 100%;
+            background-color: #181a1e; /* Kart rengi */
+            margin-top: -40px; /* Banner'ın altına girmesi için */
+            padding-top: 50px; /* Profil fotosu payı */
+            padding-bottom: 15px;
+            border-radius: 25px 25px 0 0; /* Sadece üst köşeler yuvarlak */
+            border: 1px solid #2a2d35;
+            border-bottom: none; /* Alt çizgi yok, aşağıyla birleşecek */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            z-index: 0;
+        }
+
+        /* Profil Fotosu */
+        .profile-container {
+            width: 110px;
+            height: 110px;
+            margin-top: -55px; /* Banner üzerine çıkma payı */
+            border-radius: 50%;
+            border: 4px solid #181a1e; /* Kart rengiyle aynı çerçeve */
+            overflow: hidden;
+            background: #000;
+            z-index: 2; /* En üstte */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            position: absolute;
+            top: 160px; /* Banner boyu kadar aşağıda */
+        }
+
+        /* 2. KISIM: KAYAR ALAN (Listeler, Harita vb.) */
+        .scroll-content {
+            margin-top: 390px; /* Sabit kısmın yüksekliği kadar boşluk */
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 10;
+            padding-bottom: 40px;
+        }
+
+        .card-body {
+            background-color: #181a1e;
+            border-radius: 0 0 25px 25px; /* Sadece alt köşeler yuvarlak */
+            padding: 0 20px 20px 20px; /* Üst paddingi sıfırladık */
+            min-height: 50vh;
+            border: 1px solid #2a2d35;
+            border-top: none; /* Üst çizgi yok, yukarıyla birleşecek */
+        }
+
+        /* Butonların sığması için ayar */
+        .action-buttons {
+            width: 90%;
+            margin-top: 10px;
+        }
+        
+        .header-info {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- 1. KISIM: SABİT HEADER (Banner, Profil, İsim, Butonlar) -->
     <div class="fixed-header">
+        
+        <!-- Banner -->
         <div class="banner-container">
-            <!-- onerror kısmı silindi, yerine placeholder eklendi -->
-            <img src="banner.jpg" alt="Banner" class="banner-img" onerror="this.src='https://via.placeholder.com/600x200?text=Banner+Yuklenemedi'">
+            <img src="banner.jpg" alt="Banner" class="banner-img" onerror="this.src='https://via.placeholder.com/600x200?text=Banner'">
         </div>
+
+        <!-- Profil Fotosu -->
         <div class="profile-container">
             <img src="profil.jpg" alt="Profil" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
         </div>
-    </div>
 
-    <!-- Content -->
-    <div class="scroll-content">
-        <div class="card-body">
-            
+        <!-- Sabit Kart Alanı (İsim ve Butonlar buraya taşındı) -->
+        <div class="fixed-card-part">
             <!-- Başlık -->
             <div class="header-info">
                 <h1 class="name" id="vcf-name">Yükleniyor...</h1>
@@ -68,9 +152,15 @@
                     <span>Kişilere Ekle</span>
                 </a>
             </div>
+        </div>
+    </div>
 
+    <!-- 2. KISIM: KAYAR İÇERİK (Geriye kalan her şey) -->
+    <div class="scroll-content">
+        <div class="card-body">
+            
             <!-- İletişim Listesi -->
-            <div class="info-list">
+            <div class="info-list" style="margin-top: 10px;">
                 <!-- Cep Tel -->
                 <div class="info-item">
                     <svg class="list-icon"><use href="icons.svg#mobile"></use></svg>
