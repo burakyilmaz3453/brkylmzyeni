@@ -22,7 +22,7 @@
     <div class="scroll-content">
         <div class="card-body">
             
-            <!-- Başlık (VCF'den gelecek) -->
+            <!-- Başlık -->
             <div class="header-info">
                 <h1 class="name" id="vcf-name">Yükleniyor...</h1>
                 <p class="company" id="vcf-company">...</p>
@@ -62,7 +62,9 @@
                         <span class="label">Cep Telefonu</span>
                         <span class="value" id="vcf-mobile">...</span>
                     </div>
-                    <a href="#" id="copy-mobile" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#copy"></use></svg></a>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-mobile')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
 
                 <!-- İş Tel -->
@@ -72,7 +74,9 @@
                         <span class="label">İş Telefonu</span>
                         <span class="value" id="vcf-work">...</span>
                     </div>
-                    <a href="#" id="copy-work" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#copy"></use></svg></a>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-work')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
 
                 <!-- Email -->
@@ -82,7 +86,9 @@
                         <span class="label">E-posta</span>
                         <span class="value" id="vcf-email-text">...</span>
                     </div>
-                    <a href="#" id="copy-email" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#copy"></use></svg></a>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-email-text')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
 
                 <!-- Website -->
@@ -92,17 +98,17 @@
                         <span class="label">Web Sitesi</span>
                         <span class="value" id="vcf-web">...</span>
                     </div>
-                    <a href="#" id="link-web" target="_blank" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#link"></use></svg></a>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-web')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
             </div>
 
-            <!-- Harita -->
+            <!-- Harita (Adres yazısı kaldırıldı) -->
             <div class="map-section">
                 <h3>Adres Bilgileri</h3>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3006.837687749637!2d29.0208!3d41.1014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5d4f628693f%3A0x2e60663769484337!2sOsmanl%C4%B1%20Yat%C4%B1r%C4%B1m%20Menkul%20De%C4%9Ferler%20A.%C5%9E.!5e0!3m2!1str!2str" 
-                width="100%" height="200" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
-                
-                <div class="address-text" id="vcf-address">...</div>
+                width="100%" height="200" style="border:0; border-radius:10px; margin-bottom:10px;" allowfullscreen="" loading="lazy"></iframe>
                 
                 <a href="#" id="btn-direction" target="_blank" class="directions-btn">
                     <svg class="icon-sm" style="fill:white; margin-right:5px;"><use href="icons.svg#navigation"></use></svg>
@@ -118,7 +124,7 @@
                 </a>
             </div>
 
-            <!-- ŞİRKET BİLGİLERİ (DÜZELTİLDİ) -->
+            <!-- ŞİRKET BİLGİLERİ (Tüm satırlara kopyalama eklendi) -->
             <div class="company-section">
                 <h3>Şirket Bilgileri</h3>
                 
@@ -129,15 +135,21 @@
                         <span class="label">Şirket Adı</span>
                         <span class="value" id="vcf-comp-name">...</span>
                     </div>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-comp-name')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
 
-                <!-- EKLENEN KISIM: Şirket Adresi -->
+                <!-- Şirket Adresi -->
                 <div class="company-item">
                     <svg class="list-icon"><use href="icons.svg#location"></use></svg>
                     <div class="list-text">
                         <span class="label">Şirket Adresi</span>
                         <span class="value" id="vcf-comp-address">...</span>
                     </div>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-comp-address')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
 
                 <!-- Vergi Dairesi -->
@@ -147,6 +159,9 @@
                         <span class="label">Vergi Dairesi</span>
                         <span class="value" id="vcf-tax-office">...</span>
                     </div>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-tax-office')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
 
                 <!-- Vergi No -->
@@ -156,6 +171,9 @@
                         <span class="label">Vergi No</span>
                         <span class="value" id="vcf-tax-no">...</span>
                     </div>
+                    <button class="copy-btn-box" onclick="copyToClipboard('vcf-tax-no')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
                 </div>
             </div>
             
@@ -174,10 +192,22 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        // QR Kod
         function openQR() { document.getElementById("qrModal").style.display = "flex"; }
         function closeQR() { document.getElementById("qrModal").style.display = "none"; }
         window.onclick = function(e) { if(e.target == document.getElementById("qrModal")) closeQR(); }
 
+        // Kopyalama Fonksiyonu
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Kopyalandı: " + text);
+            }, function(err) {
+                console.error('Hata:', err);
+            });
+        }
+
+        // VCF Okuma
         fetch('iletisim.vcf')
             .then(response => response.text())
             .then(vcfText => {
@@ -205,14 +235,19 @@
             const email = getTag(/EMAIL.*:(.*)/);
             const website = getTag(/URL:(.*)/);
             
-            let address = getTag(/LABEL.*:(.*)/) || getTag(/ADR.*:;;(.*)/);
+            // --- ADRES DÜZELTME KISMI ---
+            // Regex'i değiştirdik: LABEL'dan sonra ilk iki noktayı (:) bul, sonrasını al.
+            // Bu sayede adresin içindeki "No:" ibaresindeki iki noktadan etkilenmez.
+            const addressMatch = data.match(/LABEL(?:;[^:]*)*:(.*)/i);
+            let address = addressMatch ? addressMatch[1].trim() : "";
+            // Ters slash ve noktalı virgülleri temizle
             address = address.replace(/\\n/g, " ").replace(/;/g, " ");
 
             const linkedin = getTag(/X-SOCIALPROFILE.*linkedin:(.*)/i);
             const taxOffice = getTag(/X-TAX-OFFICE:(.*)/);
             const taxNo = getTag(/X-TAX-NUMBER:(.*)/);
 
-            // HTML Doldurma
+            // HTML'i Doldur
             document.getElementById('vcf-name').textContent = fullName;
             document.getElementById('footer-name').textContent = fullName;
             document.getElementById('vcf-company').textContent = org;
@@ -224,19 +259,12 @@
             document.getElementById('btn-whatsapp').href = "https://wa.me/" + cleanMobile;
 
             document.getElementById('vcf-mobile').textContent = mobile;
-            document.getElementById('copy-mobile').href = "tel:" + mobile;
-            
             document.getElementById('vcf-work').textContent = workPhone;
-            document.getElementById('copy-work').href = "tel:" + workPhone;
-
             document.getElementById('vcf-email-text').textContent = email;
-            document.getElementById('copy-email').href = "mailto:" + email;
-
             document.getElementById('vcf-web').textContent = website.replace('https://', '').replace('http://', '');
             document.getElementById('link-web').href = website;
 
-            // Harita ve Adres
-            document.getElementById('vcf-address').textContent = address;
+            // Harita linki
             document.getElementById('btn-direction').href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
 
             if (linkedin) {
@@ -247,7 +275,6 @@
 
             // Şirket Bilgileri
             document.getElementById('vcf-comp-name').textContent = org;
-            // Şirket Adresi VCF'den gelen adresi kullanıyor
             document.getElementById('vcf-comp-address').textContent = address;
             document.getElementById('vcf-tax-office').textContent = taxOffice;
             document.getElementById('vcf-tax-no').textContent = taxNo;
