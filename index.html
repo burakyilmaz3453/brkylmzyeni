@@ -11,11 +11,9 @@
     <!-- Header -->
     <div class="fixed-header">
         <div class="banner-container">
-            <!-- DOSYA İSMİNİN BİREBİR AYNI OLDUĞUNDAN EMİN OL (Büyük/Küçük harf) -->
             <img src="banner.jpg" alt="Banner" class="banner-img">
         </div>
         <div class="profile-container">
-            <!-- DOSYA İSMİNİN BİREBİR AYNI OLDUĞUNDAN EMİN OL -->
             <img src="profil.jpg" alt="Profil" class="profile-img">
         </div>
     </div>
@@ -63,7 +61,7 @@
                         <span class="label">Cep Telefonu</span>
                         <span class="value">+90 552 491 5334</span>
                     </div>
-                    <a href="tel:+905524915334" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#phone"></use></svg></a>
+                    <a href="tel:+905524915334" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#copy"></use></svg></a>
                 </div>
 
                 <div class="info-item">
@@ -72,7 +70,7 @@
                         <span class="label">İş Telefonu</span>
                         <span class="value">+90 212 366 8823</span>
                     </div>
-                    <a href="tel:+902123668823" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#phone"></use></svg></a>
+                    <a href="tel:+902123668823" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#copy"></use></svg></a>
                 </div>
 
                 <div class="info-item">
@@ -81,7 +79,7 @@
                         <span class="label">E-posta</span>
                         <span class="value">buraky@osmanlimenkul.com.tr</span>
                     </div>
-                    <a href="mailto:buraky@osmanlimenkul.com.tr" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#mail"></use></svg></a>
+                    <a href="mailto:buraky@osmanlimenkul.com.tr" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#copy"></use></svg></a>
                 </div>
 
                 <div class="info-item">
@@ -106,17 +104,16 @@
                 </a>
             </div>
 
-            <!-- YENİ: SOSYAL MEDYA BÖLÜMÜ -->
+            <!-- SOSYAL MEDYA BÖLÜMÜ -->
             <div class="social-section">
                 <h3>Sosyal Medya</h3>
-                <!-- LinkedIn Linkini Aşağıya Yapıştır -->
-                <a href="LINKEDIN_PROFIL_LINKINI_BURAYA_YAPISTIR" target="_blank" class="social-btn linkedin">
+                <!-- LinkedIn Linkini Güncellemeyi Unutma -->
+                <a href="https://www.linkedin.com/in/kullaniciadiniz" target="_blank" class="social-btn linkedin">
                     <svg class="icon-white"><use href="icons.svg#linkedin"></use></svg>
-                    <span>LinkedIn</span>
                 </a>
             </div>
 
-            <!-- GÜNCELLENMİŞ: ŞİRKET BİLGİLERİ (Kopyalama Butonlu) -->
+            <!-- ŞİRKET BİLGİLERİ (KUTULU) -->
             <div class="company-section">
                 <h3>Şirket Bilgileri</h3>
                 
@@ -127,7 +124,6 @@
                         <span class="label">Şirket Adı</span>
                         <span class="value">Osmanlı Menkul Değerler A.Ş.</span>
                     </div>
-                    <!-- Kopyalama Fonksiyonu için basit bir buton -->
                     <button class="copy-btn-box" onclick="copyText('Osmanlı Menkul Değerler A.Ş.')">
                         <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
                     </button>
@@ -188,7 +184,6 @@
         function closeQR() { document.getElementById("qrModal").style.display = "none"; }
         window.onclick = function(e) { if(e.target == document.getElementById("qrModal")) closeQR(); }
         
-        // Basit Kopyalama Fonksiyonu
         function copyText(text) {
             navigator.clipboard.writeText(text).then(function() {
                 alert("Kopyalandı: " + text);
