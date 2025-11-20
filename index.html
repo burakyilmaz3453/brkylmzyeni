@@ -6,7 +6,7 @@
     <title>Dijital Kartvizit</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- CSS DÜZELTMELERİ (SON HALİ) --- */
+        /* --- CSS DÜZELTMELERİ (BLOK TASARIM) --- */
         
         body {
             background-color: #000; 
@@ -20,8 +20,8 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 450px;
-            /* YÜKSEKLİK ARTTIRILDI: 480px yapıldı (yazılar aşağı indiği için) */
-            height: 480px; 
+            /* YÜKSEKLİK AZALTILDI: 480px -> 425px. Boşluk alındı. */
+            height: 425px; 
             z-index: 1;    
             background-color: #000;
             display: flex;
@@ -51,17 +51,19 @@
             width: 100%;
             background-color: #181a1e;
             margin-top: -40px; 
-            /* PADDING GÜNCELLENDİ: 105px yapıldı. Yazılar profil fotosundan iyice uzaklaştı. */
             padding-top: 105px; 
-            padding-bottom: 15px;
-            border-radius: 25px 25px 0 0;
+            /* BUTON ALTINDAKİ BOŞLUK AYARLANDI */
+            padding-bottom: 25px; 
+            /* Köşeler tamamen yuvarlandı, ayrı bir kutu gibi oldu */
+            border-radius: 25px; 
             border: 1px solid #2a2d35;
-            border-bottom: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             flex-grow: 1;
             z-index: 0;
+            /* Hafif gölge eklendi ki alttan ayrıldığı belli olsun */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         /* Profil Fotosu */
@@ -81,8 +83,8 @@
 
         /* 2. KISIM: KAYAR ALAN */
         .scroll-content {
-            /* MARGIN GÜNCELLENDİ: Sabit kısım 480px olduğu için burası da 480px oldu */
-            margin-top: 480px; 
+            /* MARGIN AYARLANDI: 425px (Header) + 20px (Boşluk) = 445px */
+            margin-top: 445px; 
             width: 100%;
             max-width: 450px;
             margin-left: auto;
@@ -94,18 +96,28 @@
 
         .card-body {
             background-color: #181a1e;
-            border-radius: 0 0 25px 25px; 
-            padding: 10px 20px 20px 20px;
+            /* Üst köşeler de yuvarlandı */
+            border-radius: 25px; 
+            padding: 20px;
             min-height: 60vh; 
-            border: 1px solid #2a2d35;
-            border-top: none;
+            /* Çerçeve geri getirildi */
+            border: 1px solid #2a2d35; 
             box-shadow: 0 -5px 20px rgba(0,0,0,0.5); 
         }
+        
+        /* Dekoratif Çizgi (Handle) - İsteğe bağlı, iOS hissiyatı verir */
+        .card-body::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background-color: #333;
+            margin: 0 auto 15px auto;
+            border-radius: 2px;
+        }
 
-        /* Butonların sığması için ayar */
         .action-buttons {
             width: 90%;
-            /* MARGIN ARTTIRILDI: Butonlar bir tık daha aşağı kaydı (25px) */
             margin-top: 25px;
         }
         
