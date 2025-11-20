@@ -32,6 +32,7 @@
             <!-- 5'li Butonlar -->
             <div class="action-buttons">
                 <a href="#" id="btn-call" class="action-btn">
+                    <!-- İkonlar tekrar harici dosyaya bağlandı -->
                     <div class="icon-box"><svg class="icon"><use href="icons.svg#phone"></use></svg></div>
                     <span>Ara</span>
                 </a>
@@ -104,7 +105,7 @@
                 </div>
             </div>
 
-            <!-- Harita (Adres yazısı kaldırıldı) -->
+            <!-- Harita -->
             <div class="map-section">
                 <h3>Adres Bilgileri</h3>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3006.837687749637!2d29.0208!3d41.1014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5d4f628693f%3A0x2e60663769484337!2sOsmanl%C4%B1%20Yat%C4%B1r%C4%B1m%20Menkul%20De%C4%9Ferler%20A.%C5%9E.!5e0!3m2!1str!2str" 
@@ -124,7 +125,7 @@
                 </a>
             </div>
 
-            <!-- ŞİRKET BİLGİLERİ (Tüm satırlara kopyalama eklendi) -->
+            <!-- ŞİRKET BİLGİLERİ -->
             <div class="company-section">
                 <h3>Şirket Bilgileri</h3>
                 
@@ -177,7 +178,7 @@
                 </div>
             </div>
             
-            <footer>&copy; 2024 <span id="footer-name"></span></footer>
+            <footer>&copy; 2025 <span id="footer-name"></span></footer>
         </div>
     </div>
 
@@ -190,7 +191,8 @@
         </div>
     </div>
 
-  <script>
+    <!-- JAVASCRIPT -->
+    <script>
         // QR Kod
         function openQR() { document.getElementById("qrModal").style.display = "flex"; }
         function closeQR() { document.getElementById("qrModal").style.display = "none"; }
@@ -199,7 +201,7 @@
         // Kopyalama Fonksiyonu
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).textContent;
-            if (!text || text === "...") return; // Boşsa kopyalama
+            if (!text || text === "..." || text === "—") return;
             
             navigator.clipboard.writeText(text).then(function() {
                 alert("Kopyalandı: " + text);
@@ -218,68 +220,50 @@
             .catch(error => console.error('Hata:', error));
 
         function parseVCF(data) {
-            // Yardımcı regex fonksiyonu
             const getTag = (regex) => {
                 const match = data.match(regex);
                 return match ? match[1].trim() : "";
             };
 
-            // 1. İSİM VE ŞİRKET
-            // UTF-8 bozukluklarını önlemek için decode denemesi yapılabilir ama basit regex:
             let fullName = getTag(/FN;?.*:(.*)/); 
             if(!fullName) fullName = getTag(/FN:(.*)/);
 
-            let org = getTag(/ORG;?.*:(.*)/); // Noktalı virgül varsa temizle
-            org = org.split(';')[0]; // Bazen ORG:Şirket;Departman formatında gelir, sadece ilkini al.
+            let org = getTag(/ORG;?.*:(.*)/); 
+            org = org.split(';')[0]; 
             
             const title = getTag(/TITLE;?.*:(.*)/);
             
-            // 2. TELEFONLAR
             const mobileMatch = data.match(/TEL;.*TYPE=.*CELL.*:(.*)/i) || data.match(/TEL;.*VOICE.*:(.*)/i);
             let mobile = mobileMatch ? mobileMatch[1] : "";
 
             const workMatch = data.match(/TEL;.*TYPE=.*WORK.*:(.*)/i);
             let workPhone = workMatch ? workMatch[1] : "";
 
-            // 3. E-POSTA VE WEB
             const email = getTag(/EMAIL;?.*:(.*)/);
-            // Tüm URL'leri bulalım (Linkedin için lazım olacak)
             const allUrls = [...data.matchAll(/URL;?.*:(.*)/gi)].map(m => m[1].trim());
             let website = allUrls.length > 0 ? allUrls[0] : "";
 
-            // 4. ADRES (Kritik Düzeltme)
-            // Önce LABEL (Özel format) ara, bulamazsan ADR (Standart format) ara
             let address = "";
             const labelMatch = data.match(/LABEL(?:;[^:]*)*:(.*)/i);
-            
             if (labelMatch) {
                 address = labelMatch[1].trim().replace(/\\n/g, " ");
             } else {
-                // Standart ADR formatı: ADR:;;Sokak;Şehir;Eyalet;Posta;Ülke
                 const adrMatch = data.match(/ADR(?:;[^:]*)*:(.*)/i);
                 if (adrMatch) {
-                    // Noktalı virgülleri boşlukla değiştir ve temizle
                     address = adrMatch[1].replace(/;/g, " ").replace(/\\n/g, " ").replace(/\s+/g, ' ').trim();
                 }
             }
 
-            // 5. SOSYAL MEDYA (LinkedIn Düzeltmesi)
-            // Önce özel X-SOCIALPROFILE etiketine bak, yoksa URL'lerin içinde "linkedin" ara
             let linkedin = getTag(/X-SOCIALPROFILE.*linkedin:(.*)/i) || getTag(/X-LINKEDIN:(.*)/i);
-            
             if (!linkedin) {
                 const linkedinUrl = allUrls.find(url => url.toLowerCase().includes("linkedin.com"));
                 if (linkedinUrl) linkedin = linkedinUrl;
             }
 
-            // 6. VERGİ BİLGİLERİ (Kritik)
-            // Standart VCF'lerde vergi no olmaz. Eğer dosya güncellendiyse bunlar silinmiştir.
-            // Eğer silindiyse HTML içinde varsayılan değer gösterilmemesi için kontrol koyuyoruz.
             const taxOffice = getTag(/X-TAX-OFFICE:(.*)/);
             const taxNo = getTag(/X-TAX-NUMBER:(.*)/);
 
-            // --- HTML DOLDURMA ---
-            
+            // HTML Doldurma
             if(fullName) {
                 document.getElementById('vcf-name').textContent = fullName;
                 document.getElementById('footer-name').textContent = fullName;
@@ -290,7 +274,6 @@
             }
             if(title) document.getElementById('vcf-title').textContent = title;
 
-            // Telefonlar
             if(mobile) {
                 document.getElementById('btn-call').href = "tel:" + mobile;
                 const cleanMobile = mobile.replace(/[^0-9]/g, '');
@@ -298,33 +281,28 @@
                 document.getElementById('vcf-mobile').textContent = mobile;
             }
 
-            if(workPhone) {
-                document.getElementById('vcf-work').textContent = workPhone;
-            } else {
-                // Eğer iş telefonu yoksa o satırı gizleyebilirsin veya boş bırakırsın
-                document.getElementById('vcf-work').textContent = "-";
-            }
+            if(workPhone) document.getElementById('vcf-work').textContent = workPhone;
+            else document.getElementById('vcf-work').textContent = "—";
             
-            // Email & Web
             if(email) {
                 document.getElementById('btn-email').href = "mailto:" + email;
                 document.getElementById('vcf-email-text').textContent = email;
             }
+            
+            // --- WEB SİTESİ DÜZELTME (Regex Eklendi) ---
             if(website) {
-                // Protokol temizliği
-                const cleanWeb = website.replace(/^https?:\/\//, '');
+                // http://, https:// veya // ile başlayan kısımları temizler
+                let cleanWeb = website.replace(/^https?:\/\//, '').replace(/^\/\//, '');
                 document.getElementById('vcf-web').textContent = cleanWeb;
             }
 
-            // Adres ve Harita
             if(address) {
                 document.getElementById('btn-direction').href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
                 document.getElementById('vcf-comp-address').textContent = address;
             } else {
-                document.getElementById('vcf-comp-address').textContent = "-";
+                document.getElementById('vcf-comp-address').textContent = "—";
             }
 
-            // LinkedIn Göster/Gizle
             const liBtn = document.getElementById('btn-linkedin');
             if (linkedin) {
                 liBtn.style.display = "flex";
@@ -333,12 +311,9 @@
                 liBtn.style.display = "none";
             }
 
-            // Vergi Bilgileri
-            // Eğer VCF'den gelmiyorsa "..." yerine "-" koyuyoruz ki boş olduğu belli olsun
             document.getElementById('vcf-tax-office').textContent = taxOffice ? taxOffice : "—";
             document.getElementById('vcf-tax-no').textContent = taxNo ? taxNo : "—";
         }
     </script>
 </body>
 </html>
-
