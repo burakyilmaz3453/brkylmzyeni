@@ -8,193 +8,194 @@
 </head>
 <body>
 
-    <!-- 1. KISIM: SABİT ARKAPLAN (Banner ve Profil Fotosu) -->
+    <!-- Header -->
     <div class="fixed-header">
         <div class="banner-container">
+            <!-- DOSYA İSMİNİN BİREBİR AYNI OLDUĞUNDAN EMİN OL (Büyük/Küçük harf) -->
             <img src="banner.jpg" alt="Banner" class="banner-img">
         </div>
         <div class="profile-container">
+            <!-- DOSYA İSMİNİN BİREBİR AYNI OLDUĞUNDAN EMİN OL -->
             <img src="profil.jpg" alt="Profil" class="profile-img">
         </div>
     </div>
 
-    <!-- 2. KISIM: KAYDIRILABİLİR İÇERİK -->
+    <!-- Content -->
     <div class="scroll-content">
         <div class="card-body">
             
-            <!-- İsim ve Unvan -->
+            <!-- Başlık -->
             <div class="header-info">
                 <h1 class="name">Burak Yılmaz</h1>
                 <p class="company">Osmanlı Menkul Değerler A.Ş.</p>
                 <p class="title">BT System Yöneticisi</p>
             </div>
 
-            <!-- 5'li Aksiyon Butonları -->
+            <!-- 5'li Butonlar -->
             <div class="action-buttons">
-                <!-- 1. Ara -->
                 <a href="tel:+905524915334" class="action-btn">
-                    <div class="icon-box">
-                        <svg class="icon"><use href="icons.svg#phone"></use></svg>
-                    </div>
+                    <div class="icon-box"><svg class="icon"><use href="icons.svg#phone"></use></svg></div>
                     <span>Ara</span>
                 </a>
-
-                <!-- 2. E-mail -->
                 <a href="mailto:buraky@osmanlimenkul.com.tr" class="action-btn">
-                    <div class="icon-box">
-                        <svg class="icon"><use href="icons.svg#mail"></use></svg>
-                    </div>
+                    <div class="icon-box"><svg class="icon"><use href="icons.svg#mail"></use></svg></div>
                     <span>E-mail</span>
                 </a>
-
-                <!-- 3. QR Kod (Popup Açar) -->
                 <button onclick="openQR()" class="action-btn">
-                    <div class="icon-box">
-                        <svg class="icon"><use href="icons.svg#qr"></use></svg>
-                    </div>
+                    <div class="icon-box"><svg class="icon"><use href="icons.svg#qr"></use></svg></div>
                     <span>QR</span>
                 </button>
-
-                <!-- 4. WhatsApp -->
-                <!-- "text=" kısmına istediğin varsayılan mesajı yazabilirsin -->
-                <a href="https://wa.me/905524915334?text=Merhaba,%20sizinle%20iletişime%20geçmek%20istiyorum." target="_blank" class="action-btn">
-                    <div class="icon-box">
-                        <svg class="icon"><use href="icons.svg#whatsapp"></use></svg>
-                    </div>
+                <a href="https://wa.me/905524915334" target="_blank" class="action-btn">
+                    <div class="icon-box"><svg class="icon"><use href="icons.svg#whatsapp"></use></svg></div>
                     <span>WhatsApp</span>
                 </a>
-
-                <!-- 5. Kişilere Ekle -->
                 <a href="iletisim.vcf" download class="action-btn highlight-btn">
-                    <div class="icon-box">
-                        <svg class="icon"><use href="icons.svg#add-user"></use></svg>
-                    </div>
+                    <div class="icon-box"><svg class="icon"><use href="icons.svg#add-user"></use></svg></div>
                     <span>Kişilere Ekle</span>
                 </a>
             </div>
 
-            <!-- Detaylı Bilgi Listesi -->
+            <!-- İletişim Listesi -->
             <div class="info-list">
-                
-                <!-- Telefon 1 -->
                 <div class="info-item">
                     <svg class="list-icon"><use href="icons.svg#mobile"></use></svg>
                     <div class="list-text">
                         <span class="label">Cep Telefonu</span>
                         <span class="value">+90 552 491 5334</span>
                     </div>
-                    <a href="tel:+905524915334" class="copy-btn">
-                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
-                    </a>
+                    <a href="tel:+905524915334" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#phone"></use></svg></a>
                 </div>
 
-                <!-- Telefon 2 -->
                 <div class="info-item">
                     <svg class="list-icon"><use href="icons.svg#phone-classic"></use></svg>
                     <div class="list-text">
                         <span class="label">İş Telefonu</span>
                         <span class="value">+90 212 366 8823</span>
                     </div>
-                    <a href="tel:+902123668823" class="copy-btn">
-                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
-                    </a>
+                    <a href="tel:+902123668823" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#phone"></use></svg></a>
                 </div>
 
-                <!-- Email -->
                 <div class="info-item">
                     <svg class="list-icon"><use href="icons.svg#mail"></use></svg>
                     <div class="list-text">
                         <span class="label">E-posta</span>
                         <span class="value">buraky@osmanlimenkul.com.tr</span>
                     </div>
-                    <a href="mailto:buraky@osmanlimenkul.com.tr" class="copy-btn">
-                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
-                    </a>
+                    <a href="mailto:buraky@osmanlimenkul.com.tr" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#mail"></use></svg></a>
                 </div>
 
-                <!-- Website -->
                 <div class="info-item">
                     <svg class="list-icon"><use href="icons.svg#web"></use></svg>
                     <div class="list-text">
                         <span class="label">Web Sitesi</span>
                         <span class="value">www.osmanlimenkul.com.tr</span>
                     </div>
-                    <a href="https://www.osmanlimenkul.com.tr" target="_blank" class="copy-btn">
-                        <svg class="icon-sm"><use href="icons.svg#link"></use></svg>
-                    </a>
+                    <a href="https://www.osmanlimenkul.com.tr" target="_blank" class="copy-btn"><svg class="icon-sm"><use href="icons.svg#link"></use></svg></a>
                 </div>
-
-                <!-- Harita / Adres -->
-                <div class="map-section">
-                    <h3>Adres Bilgileri</h3>
-                    <!-- Google Maps Embed (Örnek Maslak Lokasyonu) -->
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3006.837687749637!2d29.0208!3d41.1014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5d4f628693f%3A0x2e60663769484337!2sOsmanl%C4%B1%20Yat%C4%B1r%C4%B1m%20Menkul%20De%C4%9Ferler%20A.%C5%9E.!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
-                        width="100%" height="200" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy">
-                    </iframe>
-                    <div class="address-text">
-                        Maslak Mah. Büyükdere Cad. No: 255/802 Nurol Plaza, Sarıyer / İstanbul
-                    </div>
-                    <a href="https://maps.app.goo.gl/OrnekLink" target="_blank" class="directions-btn">
-                        <svg class="icon-sm"><use href="icons.svg#navigation"></use></svg>
-                        Yol Tarifi Al
-                    </a>
-                </div>
-
-                 <!-- Şirket Bilgileri -->
-                 <div class="company-section">
-                    <h3>Şirket Bilgileri</h3>
-                    <div class="info-item">
-                        <svg class="list-icon"><use href="icons.svg#building"></use></svg>
-                        <div class="list-text">
-                            <span class="label">Şirket Adı</span>
-                            <span class="value">Osmanlı Menkul Değerler A.Ş.</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <svg class="list-icon"><use href="icons.svg#tax"></use></svg>
-                        <div class="list-text">
-                            <span class="label">Vergi No</span>
-                            <span class="value">47000087388</span>
-                        </div>
-                    </div>
-                </div>
-
-                <footer style="text-align:center; padding:20px; color:#555; font-size:12px;">
-                    &copy; 2024 Burak Yılmaz
-                </footer>
-
             </div>
+
+            <!-- Harita -->
+            <div class="map-section">
+                <h3>Adres Bilgileri</h3>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3006.837687749637!2d29.0208!3d41.1014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5d4f628693f%3A0x2e60663769484337!2sOsmanl%C4%B1%20Yat%C4%B1r%C4%B1m%20Menkul%20De%C4%9Ferler%20A.%C5%9E.!5e0!3m2!1str!2str" 
+                width="100%" height="200" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="address-text">Maslak Mah. Büyükdere Cad. No: 255/802 Nurol Plaza, Sarıyer / İstanbul</div>
+                <a href="https://maps.app.goo.gl/OrnekLink" target="_blank" class="directions-btn">
+                    <svg class="icon-sm" style="fill:white; margin-right:5px;"><use href="icons.svg#navigation"></use></svg>
+                    Yol Tarifi Al
+                </a>
+            </div>
+
+            <!-- YENİ: SOSYAL MEDYA BÖLÜMÜ -->
+            <div class="social-section">
+                <h3>Sosyal Medya</h3>
+                <!-- LinkedIn Linkini Aşağıya Yapıştır -->
+                <a href="LINKEDIN_PROFIL_LINKINI_BURAYA_YAPISTIR" target="_blank" class="social-btn linkedin">
+                    <svg class="icon-white"><use href="icons.svg#linkedin"></use></svg>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+
+            <!-- GÜNCELLENMİŞ: ŞİRKET BİLGİLERİ (Kopyalama Butonlu) -->
+            <div class="company-section">
+                <h3>Şirket Bilgileri</h3>
+                
+                <!-- Şirket Adı -->
+                <div class="company-item">
+                    <svg class="list-icon"><use href="icons.svg#building"></use></svg>
+                    <div class="list-text">
+                        <span class="label">Şirket Adı</span>
+                        <span class="value">Osmanlı Menkul Değerler A.Ş.</span>
+                    </div>
+                    <!-- Kopyalama Fonksiyonu için basit bir buton -->
+                    <button class="copy-btn-box" onclick="copyText('Osmanlı Menkul Değerler A.Ş.')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
+                </div>
+
+                <!-- Şirket Adresi -->
+                <div class="company-item">
+                    <svg class="list-icon"><use href="icons.svg#location"></use></svg>
+                    <div class="list-text">
+                        <span class="label">Şirket Adresi</span>
+                        <span class="value">Maslak Mah. Büyükdere Cad. No. 255/802 Nurol Plaza 34398 Sarıyer / İstanbul / TÜRKİYE</span>
+                    </div>
+                    <button class="copy-btn-box" onclick="copyText('Maslak Mah. Büyükdere Cad. No. 255/802 Nurol Plaza 34398 Sarıyer / İstanbul / TÜRKİYE')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
+                </div>
+
+                <!-- Vergi Dairesi -->
+                <div class="company-item">
+                    <svg class="list-icon"><use href="icons.svg#tax-office"></use></svg>
+                    <div class="list-text">
+                        <span class="label">Vergi Dairesi</span>
+                        <span class="value">Boğaziçi Kurumlar</span>
+                    </div>
+                    <button class="copy-btn-box" onclick="copyText('Boğaziçi Kurumlar')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
+                </div>
+
+                <!-- Vergi No -->
+                <div class="company-item">
+                    <svg class="list-icon"><use href="icons.svg#card"></use></svg>
+                    <div class="list-text">
+                        <span class="label">Vergi No</span>
+                        <span class="value">47000087388</span>
+                    </div>
+                    <button class="copy-btn-box" onclick="copyText('47000087388')">
+                        <svg class="icon-sm"><use href="icons.svg#copy"></use></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <footer>&copy; 2024 Burak Yılmaz</footer>
         </div>
     </div>
 
-    <!-- QR Modal (Gizli Pencere) -->
+    <!-- QR Modal -->
     <div id="qrModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeQR()">&times;</span>
             <h3>QR Kodunuz</h3>
             <img src="QR.svg" alt="QR Kod" class="modal-qr">
-            <p>Kişiyi rehbere eklemek için okutun.</p>
         </div>
     </div>
 
     <script>
-        // QR Penceresini Açma/Kapama Kodları
-        function openQR() {
-            document.getElementById("qrModal").style.display = "flex";
-        }
-        function closeQR() {
-            document.getElementById("qrModal").style.display = "none";
-        }
-
-        // Pencere dışına tıklanırsa kapat
-        window.onclick = function(event) {
-            var modal = document.getElementById("qrModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+        function openQR() { document.getElementById("qrModal").style.display = "flex"; }
+        function closeQR() { document.getElementById("qrModal").style.display = "none"; }
+        window.onclick = function(e) { if(e.target == document.getElementById("qrModal")) closeQR(); }
+        
+        // Basit Kopyalama Fonksiyonu
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Kopyalandı: " + text);
+            }, function(err) {
+                console.error('Kopyalama hatası: ', err);
+            });
         }
     </script>
-
 </body>
 </html>
